@@ -26,21 +26,19 @@ $global:desktopPath = "C:\Users\$currentUser\Desktop"
 $global:logFolder = Join-Path -Path $desktopPath -ChildPath "\Logs"
 $global:compressedPath = Join-Path -Path $desktopPath -ChildPath "\Logs.zip"
 
-if (!(Test-Path $logFolder))
-{
-  mkdir $logFolder
-}
-
-if (Test-Path $logFolder)
-{
-  Write-Host "Found dirty environment cleaning up." -ForegroundColor Yellow
-  Remove-Item "$logFolder\*.evtx"
-}
-
 if (Test-Path $compressedPath)
 {
   Write-Host "Found dirty environment cleaning up." -ForegroundColor Yellow
   Remove-Item $compressedPath
+}
+
+if (!(Test-Path $logFolder))
+{
+  mkdir $logFolder
+} else
+{
+  Write-Host "Found dirty environment cleaning up." -ForegroundColor Yellow
+  Remove-Item "$logFolder\*.evtx"
 }
 
 function Get-Logs
