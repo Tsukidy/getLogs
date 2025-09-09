@@ -23,8 +23,17 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 $global:currentUser = (Get-CimInstance -ClassName Win32_ComputerSystem).Username
 $global:currentUser = $global:currentUser.split('\')[-1]
 $global:desktopPath = "C:\Users\$currentUser\Desktop"
-$global:logFolder = Join-Path -Path $desktopPath -ChildPath "\Logs"
-$global:compressedPath = Join-Path -Path $desktopPath -ChildPath "\Logs.zip"
+$global:oneDriveDesktopPath = "C:\Users\$currentUser\OneDrive\Desktop"
+
+if (Test-Path $global:oneDriveDesktopPath)
+{
+  $global:logFolder = Join-Path -Path $oneDriveDesktopPath -ChildPath "\Logs"
+  $global:compressedPath = Join-Path -Path $oneDriveDesktopPath -ChildPath "\Logs.zip"
+} else
+{
+  $global:logFolder = Join-Path -Path $desktopPath -ChildPath "\Logs"
+  $global:compressedPath = Join-Path -Path $desktopPath -ChildPath "\Logs.zip"
+}
 
 if (Test-Path $compressedPath)
 {
