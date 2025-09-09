@@ -31,10 +31,15 @@ if (!(Test-Path $logFolder))
   mkdir $logFolder
 }
 
-if ((Test-Path $compressedPath) -or (Test-Path $logFolder))
+if (Test-Path $logFolder)
 {
-  Write-Host "Found dirty environment cleaning up."
+  Write-Host "Found dirty environment cleaning up." -ForegroundColor Yellow
   Remove-Item "$logFolder\*.evtx"
+}
+
+if (Test-Path $compressedPath)
+{
+  Write-Host "Found dirty environment cleaning up." -ForegroundColor Yellow
   Remove-Item $compressedPath
 }
 
